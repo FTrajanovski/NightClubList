@@ -13,20 +13,28 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace NightClubList
 {
     public partial class Form2 : Form
     {
-        
+        private string firstName;
+        private string lastName;
+
+
         public Form2()
         {
             InitializeComponent();
         }
+       
+
 
         private void button1_Click(object sender, EventArgs e)
         {
+            listBox1.Items.Clear();
 
 
             if (txtLastNameSearch.Text == "")
@@ -39,6 +47,12 @@ namespace NightClubList
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = connstring;
                 con.Open();
+
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+                textBox5.Clear();
 
 
 
@@ -55,8 +69,13 @@ namespace NightClubList
                         item += reader.GetValue(i).ToString() + " - ";
                     }
                     listBox1.Items.Add(item);
+                    
+
                 }
                 reader.Close();
+                
+
+
 
 
                 //   {
@@ -81,16 +100,16 @@ namespace NightClubList
                 //   listBox1.Text = ex.Message;
                 //   }
             }
-            else if(txtLastNameSearch.Text != "")
+            else if (txtLastNameSearch.Text != "")
             {
-               
-                
-                
-                
-                    string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
-                    MySqlConnection con = new MySqlConnection();
-                    con.ConnectionString = connstring;
-                    con.Open();
+
+
+
+
+                string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
+                MySqlConnection con = new MySqlConnection();
+                con.ConnectionString = connstring;
+                con.Open();
 
                 string sql = "SELECT * FROM nightclublist WHERE LastName LIKE @searchText";
                 MySqlCommand command = new MySqlCommand(sql, con);
@@ -99,7 +118,7 @@ namespace NightClubList
                 listBox1.Items.Clear();
                 while (reader.Read())
                 {
-                    
+
 
                     string item = "";
                     for (int i = 0; i < reader.FieldCount; i++)
@@ -118,17 +137,35 @@ namespace NightClubList
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string selectedItem = listBox1.SelectedItem.ToString();
+            string[] values = selectedItem.Split(" - ");
+            string id = values[0];
+            string firstName = values[1];
+            string lastName = values[2];
+            string email = values[3];
+            string phone = values[4];
             
+            textBox1.Text = firstName;
+            textBox2.Text = lastName;
+            textBox3.Text = email;
+            textBox4.Text = phone;
+            textBox5.Text = id;
+
+           
+
+
+
+
 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
 
-              string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
-              MySqlConnection con = new MySqlConnection();
-              con.ConnectionString = connstring;
-              con.Open();
+            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
+            MySqlConnection con = new MySqlConnection();
+            con.ConnectionString = connstring;
+            con.Open();
             if (textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "")
             {
                 MessageBox.Show("Please fill out all personal data");
@@ -165,7 +202,22 @@ namespace NightClubList
         private void button3_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            textBox4.Clear();
+            textBox5.Clear();
+
+
+
         }
+
+
+
+
+
+
+
 
         private void button4_Click(object sender, EventArgs e)
         {
@@ -174,16 +226,57 @@ namespace NightClubList
             con.ConnectionString = connstring;
             con.Open();
 
-            string sql = "DELETE FROM nightclublist WHERE ID = @id";
-            MySqlCommand command = new MySqlCommand(sql, con);
-            command.Parameters.AddWithValue("@id", listBox1.SelectedValue);
-            int rowsAffected = command.ExecuteNonQuery();
-            if (rowsAffected > 0)
+            string updateSQL = "DELETE FROM nightclublist WHERE Id = @value1";
+            using (MySqlCommand cmd = new MySqlCommand(updateSQL, con))
             {
+                cmd.Parameters.AddWithValue("@value1", textBox5.Text);
+                cmd.ExecuteNonQuery();
+
+            }
+            listBox1.Items.Clear();
+            listBox1.Items.Add(textBox1.Text + " is deleted from the list");
 
 
-                listBox1.Items.Remove(listBox1.SelectedItem);
-            }con.Close();
         }
+
+
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
+            MySqlConnection con = new MySqlConnection();
+            con.ConnectionString = connstring;
+            con.Open();
+
+
+
+            string updateSQL = "UPDATE nightclublist SET FirstName = @value2, LastName = @value3, EmailAdress = @value4, PhoneNumber = @value5 WHERE Id = @value1";
+            using (MySqlCommand cmd = new MySqlCommand(updateSQL, con))
+            {
+                cmd.Parameters.AddWithValue("@value1", textBox5.Text);
+                cmd.Parameters.AddWithValue("@value2", textBox1.Text);
+                cmd.Parameters.AddWithValue("@value3", textBox2.Text);
+                cmd.Parameters.AddWithValue("@value4", textBox3.Text);
+                cmd.Parameters.AddWithValue("@value5", textBox4.Text);
+                
+                cmd.ExecuteNonQuery();
+            }
+            con.Close();
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            textBox4.Clear();
+            textBox5.Clear();
+
+
+
+
+
+        }
+
+
     }
-}
+
+
+    
+} 

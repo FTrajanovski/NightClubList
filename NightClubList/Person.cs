@@ -6,25 +6,27 @@ using System.Threading.Tasks;
 
 namespace NightClubList
 {
-    public class Person
+    internal class Person
     {
 
-        public int Id;
-        public string FirstName;
-        public string LastName;
-        public string EmailAdress;
-        public int PhoneNumber;
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string EmailAdress { get; set; }
 
-            public Person(int Id, string FirstName, string LastName, string EmailAdress, int PhoneNumber)
-            {
-            this.Id = Id;
-            this.FirstName = FirstName;
-            this.LastName = LastName;
-            this.EmailAdress = EmailAdress;
-            this.PhoneNumber = PhoneNumber;
-             
-            }
+        public int PhoneNumber { get; set; }
 
-            
+        public static List<Person> people = new List<Person>();
+
+        public Person(int id, string firstname, string lastname, string emailadress, int phonenumber)
+        {
+            Id = id;
+            FirstName = firstname;
+            LastName = lastname;
+            EmailAdress = emailadress;
+            PhoneNumber = phonenumber;
         }
+
+
+    }
 }
