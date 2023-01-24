@@ -35,8 +35,8 @@ namespace NightClubList
         private void button1_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-
-
+           
+             
             if (txtLastNameSearch.Text == "")
             {
 
@@ -73,32 +73,8 @@ namespace NightClubList
 
                 }
                 reader.Close();
-                
+       
 
-
-
-
-                //   {
-                //1        DataTable dt = new DataTable();
-                //1        adapter.Fill(dt);
-                //1 listBox1.DataSource = dt;
-                //1 listBox1.DisplayMember = "FirstName";
-                //1 listBox1.DisplayMember = "LastName";
-
-
-
-
-
-                //MessageBox.Show
-                //  listBox1.DisplayMember = ("FName " + reader["FirstName"] + "LName" + reader["LastName"] + "EAdress" + reader["EmailAdress"] + "PNumber" + reader["PhoneNumber"]);
-
-                //   }
-                //} catch(MySqlException ex)
-                //  {
-                //  MessageBox.Show(
-                //   ex.ToString());
-                //   listBox1.Text = ex.Message;
-                //   }
             }
             else if (txtLastNameSearch.Text != "")
             {
@@ -129,14 +105,21 @@ namespace NightClubList
                 }
                 reader.Close();
                 txtLastNameSearch.Clear();
+                
+               
 
+                
 
 
             }
+           
         }
+
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
+
             string selectedItem = listBox1.SelectedItem.ToString();
             string[] values = selectedItem.Split(" - ");
             string id = values[0];
@@ -145,13 +128,21 @@ namespace NightClubList
             string email = values[3];
             string phone = values[4];
             
+            
             textBox1.Text = firstName;
             textBox2.Text = lastName;
             textBox3.Text = email;
             textBox4.Text = phone;
             textBox5.Text = id;
-
            
+            //if (textBox5.Text != "")
+            //{
+              //  button2.Enabled = false;
+                
+            //}
+            
+
+
 
 
 
@@ -169,6 +160,10 @@ namespace NightClubList
             if (textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "")
             {
                 MessageBox.Show("Please fill out all personal data");
+            }
+            else if (!int.TryParse(textBox4.Text, out int result))
+            {
+                MessageBox.Show("Phone Number must be a number");
             }
             else
             {
@@ -225,18 +220,26 @@ namespace NightClubList
             MySqlConnection con = new MySqlConnection();
             con.ConnectionString = connstring;
             con.Open();
-
-            string updateSQL = "DELETE FROM nightclublist WHERE Id = @value1";
-            using (MySqlCommand cmd = new MySqlCommand(updateSQL, con))
+            if (textBox5.Text == "")
             {
-                cmd.Parameters.AddWithValue("@value1", textBox5.Text);
-                cmd.ExecuteNonQuery();
+                MessageBox.Show("Select a row to delete");
+            }
+            else
+            {
+
+
+
+                string updateSQL = "DELETE FROM nightclublist WHERE Id = @value1";
+                using (MySqlCommand cmd = new MySqlCommand(updateSQL, con))
+                {
+                    cmd.Parameters.AddWithValue("@value1", textBox5.Text);
+                    cmd.ExecuteNonQuery();
+
+                }
+                listBox1.Items.Clear();
+                listBox1.Items.Add(textBox1.Text + " is deleted from the list");
 
             }
-            listBox1.Items.Clear();
-            listBox1.Items.Add(textBox1.Text + " is deleted from the list");
-
-
         }
 
 
@@ -248,28 +251,35 @@ namespace NightClubList
             con.ConnectionString = connstring;
             con.Open();
 
-
-
-            string updateSQL = "UPDATE nightclublist SET FirstName = @value2, LastName = @value3, EmailAdress = @value4, PhoneNumber = @value5 WHERE Id = @value1";
-            using (MySqlCommand cmd = new MySqlCommand(updateSQL, con))
+            if (textBox5.Text == "")
             {
-                cmd.Parameters.AddWithValue("@value1", textBox5.Text);
-                cmd.Parameters.AddWithValue("@value2", textBox1.Text);
-                cmd.Parameters.AddWithValue("@value3", textBox2.Text);
-                cmd.Parameters.AddWithValue("@value4", textBox3.Text);
-                cmd.Parameters.AddWithValue("@value5", textBox4.Text);
-                
-                cmd.ExecuteNonQuery();
+                MessageBox.Show("Select a row to update the current data");
             }
-            con.Close();
-            textBox1.Clear();
-            textBox2.Clear();
-            textBox3.Clear();
-            textBox4.Clear();
-            textBox5.Clear();
+            else
+            {
 
 
 
+                string updateSQL = "UPDATE nightclublist SET FirstName = @value2, LastName = @value3, EmailAdress = @value4, PhoneNumber = @value5 WHERE Id = @value1";
+                using (MySqlCommand cmd = new MySqlCommand(updateSQL, con))
+                {
+                    cmd.Parameters.AddWithValue("@value1", textBox5.Text);
+                    cmd.Parameters.AddWithValue("@value2", textBox1.Text);
+                    cmd.Parameters.AddWithValue("@value3", textBox2.Text);
+                    cmd.Parameters.AddWithValue("@value4", textBox3.Text);
+                    cmd.Parameters.AddWithValue("@value5", textBox4.Text);
+
+                    cmd.ExecuteNonQuery();
+                }
+                con.Close();
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+                textBox5.Clear();
+
+
+            }
 
 
         }
