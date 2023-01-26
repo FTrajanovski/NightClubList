@@ -25,18 +25,20 @@ namespace NightClubList
         private string lastName;
 
 
+
+
         public Form2()
         {
             InitializeComponent();
         }
-       
+
 
 
         private void button1_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-           
-             
+
+
             if (txtLastNameSearch.Text == "")
             {
 
@@ -69,11 +71,11 @@ namespace NightClubList
                         item += reader.GetValue(i).ToString() + " - ";
                     }
                     listBox1.Items.Add(item);
-                    
+
 
                 }
                 reader.Close();
-       
+
 
             }
             else if (txtLastNameSearch.Text != "")
@@ -105,20 +107,20 @@ namespace NightClubList
                 }
                 reader.Close();
                 txtLastNameSearch.Clear();
-                
-               
 
-                
+
+
+
 
 
             }
-           
+
         }
 
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
 
             string selectedItem = listBox1.SelectedItem.ToString();
             string[] values = selectedItem.Split(" - ");
@@ -127,20 +129,20 @@ namespace NightClubList
             string lastName = values[2];
             string email = values[3];
             string phone = values[4];
-            
-            
+
+
             textBox1.Text = firstName;
             textBox2.Text = lastName;
             textBox3.Text = email;
             textBox4.Text = phone;
             textBox5.Text = id;
-           
+
             //if (textBox5.Text != "")
             //{
-              //  button2.Enabled = false;
-                
+            //  button2.Enabled = false;
+
             //}
-            
+
 
 
 
@@ -157,6 +159,7 @@ namespace NightClubList
             MySqlConnection con = new MySqlConnection();
             con.ConnectionString = connstring;
             con.Open();
+
             if (textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "")
             {
                 MessageBox.Show("Please fill out all personal data");
@@ -169,29 +172,31 @@ namespace NightClubList
             {
 
 
-                string insertSQL = "INSERT INTO nightclublist (FirstName, LastName, EmailAdress, PhoneNumber) VALUES (@value1, @value2, @value3, @value4)";
-                using (MySqlCommand cmd = new MySqlCommand(insertSQL, con))
-                {
-                    cmd.Parameters.AddWithValue("@value1", textBox1.Text);
-                    cmd.Parameters.AddWithValue("@value2", textBox2.Text);
-                    cmd.Parameters.AddWithValue("@value3", textBox3.Text);
-                    cmd.Parameters.AddWithValue("@value4", textBox4.Text);
+            string insertSQL = "INSERT INTO nightclublist (FirstName, LastName, EmailAdress, PhoneNumber) VALUES (@value1, @value2, @value3, @value4)";
+            using (MySqlCommand cmd = new MySqlCommand(insertSQL, con))
+              {
+                  cmd.Parameters.AddWithValue("@value1", textBox1.Text);
+                  cmd.Parameters.AddWithValue("@value2", textBox2.Text);
+                  cmd.Parameters.AddWithValue("@value3", textBox3.Text);
+                  cmd.Parameters.AddWithValue("@value4", textBox4.Text);
 
-                    cmd.ExecuteNonQuery();
-                }
-                con.Close();
-                listBox1.Items.Add(textBox1.Text);
-                listBox1.Items.Add(textBox2.Text);
-                listBox1.Items.Add(textBox3.Text);
-                listBox1.Items.Add(textBox4.Text);
-                listBox1.Items.Clear();
+                  cmd.ExecuteNonQuery();
+              }
+              con.Close();
+              listBox1.Items.Add(textBox1.Text);
+              listBox1.Items.Add(textBox2.Text);
+              listBox1.Items.Add(textBox3.Text);
+              listBox1.Items.Add(textBox4.Text);
+              listBox1.Items.Clear();
 
-                listBox1.Items.Add(textBox1.Text + " is added to the list");
-                textBox1.Clear();
-                textBox2.Clear();
-                textBox3.Clear();
-                textBox4.Clear();
+              listBox1.Items.Add(textBox1.Text + " is added to the list");
+              textBox1.Clear();
+              textBox2.Clear();
+              textBox3.Clear();
+              textBox4.Clear();
             }
+                
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -253,7 +258,11 @@ namespace NightClubList
 
             if (textBox5.Text == "")
             {
-                MessageBox.Show("Select a row to update the current data");
+                MessageBox.Show("Select a row in list to update the current data");
+            }
+            else if (!int.TryParse(textBox4.Text, out int result))
+            {
+                MessageBox.Show("Phone Number must be a number");
             }
             else
             {
@@ -272,21 +281,78 @@ namespace NightClubList
                     cmd.ExecuteNonQuery();
                 }
                 con.Close();
+                listBox1.Items.Clear();
+                listBox1.Items.Add(textBox1.Text + "'s information is updated.");
+
+
                 textBox1.Clear();
                 textBox2.Clear();
                 textBox3.Clear();
                 textBox4.Clear();
                 textBox5.Clear();
-
+              
 
             }
 
 
         }
 
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
+            MySqlConnection con = new MySqlConnection();
+            con.ConnectionString = connstring;
+            con.Open();
 
+            // Select the value of the "CounterStop" column
+            string selectSql = "SELECT LimitCounter FROM listboxcounter WHERE IdCounter = 1;";
+            using (MySqlCommand cmd = new MySqlCommand(selectSql, con))
+            {
+                int limit = (int)cmd.ExecuteScalar();
+
+
+
+                if (listBox1.Items.Count >= limit)
+                {
+                    MessageBox.Show("You have reached the limit of rows allowed.");
+                }
+                else
+                {
+                }
+
+            }
+
+
+
+
+
+
+            {
+                //con.Open();
+                int rowCount = listBox1.Items.Count;
+                string updateSql = "UPDATE listboxcounter SET Counter = @rowCount WHERE IdCounter = 1;";
+                using (MySqlCommand cmd = new MySqlCommand(updateSql, con))
+                {
+                    cmd.Parameters.AddWithValue("@rowCount", rowCount);
+                    object result = cmd.ExecuteScalar();
+                }
+               
+                MessageBox.Show("The number of people in the list is: " + rowCount + "/50");
+            }
+            
+
+            
+                
+
+
+
+
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
     }
-
-
     
 } 
