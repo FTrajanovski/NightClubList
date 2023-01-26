@@ -21,9 +21,7 @@ namespace NightClubList
 {
     public partial class Form2 : Form
     {
-        private string firstName;
-        private string lastName;
-
+        
 
 
 
@@ -137,6 +135,7 @@ namespace NightClubList
             textBox4.Text = phone;
             textBox5.Text = id;
 
+            //Så att man inte ska kunna lägga till samma person 2 gånger.
             //if (textBox5.Text != "")
             //{
             //  button2.Enabled = false;
@@ -243,6 +242,11 @@ namespace NightClubList
                 }
                 listBox1.Items.Clear();
                 listBox1.Items.Add(textBox1.Text + " is deleted from the list");
+                textBox1.Clear();
+                textBox2.Clear();
+                textBox3.Clear();
+                textBox4.Clear();
+                textBox5.Clear();
 
             }
         }
@@ -304,29 +308,6 @@ namespace NightClubList
             con.ConnectionString = connstring;
             con.Open();
 
-            // Select the value of the "CounterStop" column
-            string selectSql = "SELECT LimitCounter FROM listboxcounter WHERE IdCounter = 1;";
-            using (MySqlCommand cmd = new MySqlCommand(selectSql, con))
-            {
-                int limit = (int)cmd.ExecuteScalar();
-
-
-
-                if (listBox1.Items.Count >= limit)
-                {
-                    MessageBox.Show("You have reached the limit of rows allowed.");
-                }
-                else
-                {
-                }
-
-            }
-
-
-
-
-
-
             {
                 //con.Open();
                 int rowCount = listBox1.Items.Count;
@@ -336,9 +317,36 @@ namespace NightClubList
                     cmd.Parameters.AddWithValue("@rowCount", rowCount);
                     object result = cmd.ExecuteScalar();
                 }
-               
+
                 MessageBox.Show("The number of people in the list is: " + rowCount + "/50");
             }
+
+            // Hämta värde från colmn(LimitCounter) och gör om till variabel
+            string selectSql = "SELECT LimitCounter FROM listboxcounter WHERE IdCounter = 1;";
+            using (MySqlCommand cmd = new MySqlCommand(selectSql, con))
+            {
+                int limit = (int)cmd.ExecuteScalar();
+
+
+
+                if (listBox1.Items.Count == limit)
+                {
+                    MessageBox.Show("The list has reached the limit of persons allowed in club.");
+                }
+                else if(listBox1.Items.Count > limit)
+                {
+                    MessageBox.Show("The list has past the limit of persons allowed in club.");
+
+                }
+
+            }
+
+
+
+
+
+
+            
             
 
             

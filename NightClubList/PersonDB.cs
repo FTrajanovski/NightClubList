@@ -14,7 +14,7 @@ namespace NightClubList
 {
     public class PersonDB
     {
-      
+      /*
         public void Search(string searchTerm, ListBox listbox)
         {
             string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
@@ -36,7 +36,7 @@ namespace NightClubList
             }
         }
 
-
+        */
 
         }
 

@@ -8,7 +8,7 @@ namespace NightClubList
 {
     internal class Person
     {
-
+        /*
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -26,7 +26,7 @@ namespace NightClubList
             EmailAdress = emailadress;
             PhoneNumber = phonenumber;
         }
-
+        */
 
     }
 }
