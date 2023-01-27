@@ -63,9 +63,49 @@ namespace NightClubList.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _0caca359f7f6c1623ec2e963f5a5b706 {
+            get {
+                object obj = ResourceManager.GetObject("0caca359f7f6c1623ec2e963f5a5b706", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap disco_bild {
             get {
                 object obj = ResourceManager.GetObject("disco bild", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Guest_List_Application_Ticketstripe {
+            get {
+                object obj = ResourceManager.GetObject("Guest_List_Application_Ticketstripe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Jewel_Guestlist {
+            get {
+                object obj = ResourceManager.GetObject("Jewel-Guestlist", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap USer {
+            get {
+                object obj = ResourceManager.GetObject("USer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

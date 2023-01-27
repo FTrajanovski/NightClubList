@@ -34,9 +34,12 @@ namespace NightClubList
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //rensa listan och göra add knappen till användbar
             listBox1.Items.Clear();
+            button2.Enabled = true;
 
 
+            //Om man trycker på search utan att skriva in något, kommer alla namn upp
             if (txtLastNameSearch.Text == "")
             {
 
@@ -75,7 +78,7 @@ namespace NightClubList
                 reader.Close();
 
 
-            }
+            }  //Om inte txtLastNameSearch är tom så söker den efter liknande efternamn som inmatade sök-strängen av anv.
             else if (txtLastNameSearch.Text != "")
             {
 
@@ -118,7 +121,7 @@ namespace NightClubList
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            //När användaren trycker på en rad i listboxen, så ska informationen om raden dyka upp i textboxarna.
 
             string selectedItem = listBox1.SelectedItem.ToString();
             string[] values = selectedItem.Split(" - ");
@@ -135,12 +138,12 @@ namespace NightClubList
             textBox4.Text = phone;
             textBox5.Text = id;
 
-            //Så att man inte ska kunna lägga till samma person 2 gånger.
-            //if (textBox5.Text != "")
-            //{
-            //  button2.Enabled = false;
+            //Så att man inte ska kunna lägga till samma person 2 gånger. ADD knapp går bort 
+            if (textBox5.Text != "")
+            {
+              button2.Enabled = false;
 
-            //}
+            }
 
 
 
@@ -206,6 +209,8 @@ namespace NightClubList
             textBox3.Clear();
             textBox4.Clear();
             textBox5.Clear();
+            button2.Enabled = true;
+
 
 
 
@@ -220,6 +225,7 @@ namespace NightClubList
 
         private void button4_Click(object sender, EventArgs e)
         {
+            button2.Enabled = true;
             string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
             MySqlConnection con = new MySqlConnection();
             con.ConnectionString = connstring;
