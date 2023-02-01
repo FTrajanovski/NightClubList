@@ -51,6 +51,7 @@ namespace NightClubList
                 con.ConnectionString = connstring;
                 con.Open();
 
+                //Rensar textboxerna
                 textBox1.Clear();
                 textBox2.Clear();
                 textBox3.Clear();
@@ -64,7 +65,7 @@ namespace NightClubList
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-
+                    //For loop som loopar igenom alla namnen
 
                     string item = "";
                     for (int i = 0; i < reader.FieldCount; i++)
@@ -138,7 +139,7 @@ namespace NightClubList
             textBox4.Text = phone;
             textBox5.Text = id;
 
-            //Så att man inte ska kunna lägga till samma person 2 gånger. ADD knapp går bort 
+            //Så att man inte ska kunna lägga till samma person 2 gånger. ADD knapp går bort när man klickar på en rad i listboxen.
             if (textBox5.Text != "")
             {
               button2.Enabled = false;
@@ -162,6 +163,8 @@ namespace NightClubList
             con.ConnectionString = connstring;
             con.Open();
 
+            //Felmeddelanden 
+
             if (textBox1.Text == "" || textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "")
             {
                 MessageBox.Show("Please fill out all personal data");
@@ -170,6 +173,8 @@ namespace NightClubList
             {
                 MessageBox.Show("Phone Number must be a number");
             }
+
+            //Om all inmatad data från användaren stämmer, ska användaren kunna lägga till en person till databasen.
             else
             {
 
@@ -200,7 +205,7 @@ namespace NightClubList
                 
             
         }
-
+        //Återställer alla fällt.
         private void button3_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
@@ -230,10 +235,13 @@ namespace NightClubList
             MySqlConnection con = new MySqlConnection();
             con.ConnectionString = connstring;
             con.Open();
+
+            //Om man klickar på delete knappen utan att välja en rad, vilket jag tar reda på om textbox5 är tom, då id nummeret dyker upp i den textboxen så fort en rad är vald.
             if (textBox5.Text == "")
             {
                 MessageBox.Show("Select a row to delete");
             }
+            //När Id matchar nummeret som dyker upp i textBox5 raderar den raden från databasen. textBox5 tar in id nummret från raden.
             else
             {
 
@@ -266,6 +274,7 @@ namespace NightClubList
             con.ConnectionString = connstring;
             con.Open();
 
+            //Felmeddelanden
             if (textBox5.Text == "")
             {
                 MessageBox.Show("Select a row in list to update the current data");
@@ -274,6 +283,7 @@ namespace NightClubList
             {
                 MessageBox.Show("Phone Number must be a number");
             }
+            //Uppdatera befintlig rad i databasen
             else
             {
 
@@ -313,9 +323,9 @@ namespace NightClubList
             MySqlConnection con = new MySqlConnection();
             con.ConnectionString = connstring;
             con.Open();
-
+            //Räknar ut hur många rader/personer det finns i listboxen. 
             {
-                //con.Open();
+                
                 int rowCount = listBox1.Items.Count;
                 string updateSql = "UPDATE listboxcounter SET Counter = @rowCount WHERE IdCounter = 1;";
                 using (MySqlCommand cmd = new MySqlCommand(updateSql, con))
@@ -327,7 +337,7 @@ namespace NightClubList
                 MessageBox.Show("The number of people in the list is: " + rowCount + "/50");
             }
 
-            // Hämta värde från colmn(LimitCounter) och gör om till variabel
+            // Hämta värde från colmn(LimitCounter) och gör om till variabel. Och det blir gränsen till hur många personer som får tas in i listan.
             string selectSql = "SELECT LimitCounter FROM listboxcounter WHERE IdCounter = 1;";
             using (MySqlCommand cmd = new MySqlCommand(selectSql, con))
             {
