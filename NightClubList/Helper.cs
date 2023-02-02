@@ -26,7 +26,7 @@ namespace NightClubList
                 builder.Server = "127.0.0.1";
                 builder.UserID = "root";
                 builder.Password = "Kadino44";
-                builder.Database = "inlämningsuppgift";
+                builder.Database = "inlamningsuppgift";
                 builder.SslMode = MySqlSslMode.None;
                 connection = new MySqlConnection(builder.ToString());
                 MessageBox.Show("Database connection successfull", "Connection", MessageBoxButtons.OK, MessageBoxIcon.Information);

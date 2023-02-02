@@ -46,7 +46,7 @@ namespace NightClubList
 
 
 
-                string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
+                string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlamningsuppgift";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = connstring;
                 con.Open();
@@ -60,7 +60,7 @@ namespace NightClubList
 
 
 
-                string sql = "select * from inlämningsuppgift.nightclublist";
+                string sql = "select * from inlamningsuppgift.nightclublist";
                 MySqlCommand cmd = new MySqlCommand(sql, con);
                 MySqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -86,7 +86,7 @@ namespace NightClubList
 
 
 
-                string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
+                string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlamningsuppgift";
                 MySqlConnection con = new MySqlConnection();
                 con.ConnectionString = connstring;
                 con.Open();
@@ -158,7 +158,7 @@ namespace NightClubList
         private void button2_Click(object sender, EventArgs e)
         {
 
-            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
+            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlamningsuppgift";
             MySqlConnection con = new MySqlConnection();
             con.ConnectionString = connstring;
             con.Open();
@@ -231,7 +231,7 @@ namespace NightClubList
         private void button4_Click(object sender, EventArgs e)
         {
             button2.Enabled = true;
-            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
+            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlamningsuppgift";
             MySqlConnection con = new MySqlConnection();
             con.ConnectionString = connstring;
             con.Open();
@@ -269,7 +269,7 @@ namespace NightClubList
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
+            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlamningsuppgift";
             MySqlConnection con = new MySqlConnection();
             con.ConnectionString = connstring;
             con.Open();
@@ -319,7 +319,7 @@ namespace NightClubList
 
         private void button6_Click(object sender, EventArgs e)
         {
-            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlämningsuppgift";
+            string connstring = "server=localhost;uid=root;pwd=Kadino44;database=inlamningsuppgift";
             MySqlConnection con = new MySqlConnection();
             con.ConnectionString = connstring;
             con.Open();

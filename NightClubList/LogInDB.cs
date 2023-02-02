@@ -17,7 +17,7 @@ namespace NightClubList
 
         public static LogIn RetrieveUser(string username)
         {
-            string query = "SELECT * FROM inlämningsuppgift.login where userName = (@username) limit 1";
+            string query = "SELECT * FROM inlamningsuppgift.login where userName = (@username) limit 1";
             cmd = Helper.RunQuery(query, username);
             LogIn logIn = null;
             if (cmd != null)
